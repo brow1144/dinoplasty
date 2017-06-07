@@ -1,4 +1,5 @@
 const app = {
+
   init(selectors) {
     this.dinos = []
     this.max = 0
@@ -19,16 +20,79 @@ const app = {
     const listItem = this.renderListItem(dino)
     this.list.appendChild(listItem)
 
-    // TODO: Add the dino to this.dinos (Array)
+    this.dinos.unshift(dino.name)
 
     ++ this.max
+
+    //  const a = document.getElementsByClassName('secondary button')
+    // a[0].addEventListener('click', this.addFavorite)
+
+    // const b = document.getElementsByClassName('success button')
+    // b[0].addEventListener('click', this.addFavorite)
+
+    // const c = document.querySelector('.warning.button')
+    // c.addEventListener('click', this.addFavorite)
+
+    // const d = document.getElementsByClassName('alert button')
+    // d[0].addEventListener('click', this.addFavorite)
+
+    ev.target.reset()
   },
 
   renderListItem(dino) {
     const item = document.createElement('li')
+
+    const buttonDiv = document.createElement('div')
+    buttonDiv.setAttribute('class', 'button-group')
+
+    const up = document.createElement('a')
+    up.setAttribute('class', 'secondary button')
+    up.textContent = 'Up'
+
+    const down = document.createElement('a')
+    down.setAttribute('class', 'success button')
+    down.textContent = 'Down'
+
+    const promote = document.createElement('a')
+    promote.setAttribute('class', 'warning button')
+    promote.textContent = 'Promote'
+
+    const deleteButton = document.createElement('a')
+    deleteButton.setAttribute('class', 'alert button')
+    deleteButton.textContent = 'Delete'
+
+    buttonDiv.appendChild(up)
+    buttonDiv.appendChild(down)
+    buttonDiv.appendChild(promote)
+    buttonDiv.appendChild(deleteButton)
+    
     item.textContent = dino.name
+
+    item.appendChild(buttonDiv)
+
+    promote.addEventListener('click', this.addFavorite)
+    deleteButton.addEventListener('click', this.deleteItem)
+
     return item
-  }
+  },
+
+  addFavorite(ev) {
+      ev.preventDefault()
+      const listHTML = ev.target.parentElement.parentElement
+      //console.log(listHTML)
+      if(listHTML.style.backgroundColor == 'lightgreen') {
+        listHTML.style.backgroundColor = 'whitesmoke'
+      } else {
+        listHTML.style.backgroundColor = 'lightgreen'
+      }
+  },
+  
+  deleteItem(ev) {
+      ev.preventDefault()
+      const listHTML = ev.target.parentElement.parentElement
+      listHTML.remove()
+  },
+
 }
 
 app.init({
