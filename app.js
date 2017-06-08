@@ -17,7 +17,7 @@ const app = {
     }
     const listItem = this.renderListItem(dino)
     this.list.appendChild(listItem)
-    this.dinos.unshift(dino.name)
+    this.dinos.push(dino.name)
     ++ this.max
     ev.target.reset()
   },
@@ -91,7 +91,7 @@ const app = {
       
       for(let i = 0; i < this.dinos.length; i++) {
         if(`i${this.dinos[i]}` == `${listHTML.getAttribute('id')}`) {
-             this.dinos.splice(i, 1);
+            this.dinos.splice(i, 1);
         }
       }
       listHTML.remove()
