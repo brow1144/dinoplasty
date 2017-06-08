@@ -11,19 +11,14 @@ const app = {
 
   addDino(ev) {
     ev.preventDefault()
-
     const dino = {
       id: this.max + 1,
       name: ev.target.dinoName.value,
     }
-
     const listItem = this.renderListItem(dino)
     this.list.appendChild(listItem)
-
     this.dinos.unshift(dino.name)
-
     ++ this.max
-
     ev.target.reset()
   },
 
