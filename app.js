@@ -16,8 +16,11 @@ const app = {
       name: ev.target.dinoName.value,
     }
     const listItem = this.renderListItem(dino)
-    this.list.appendChild(listItem)
-    this.dinos.push(dino.name)
+    this.list.insertBefore(listItem, this.list.firstElementChild)
+
+    this.dinos.unshift(dino)
+    //console.log(this.dinos)
+
     ++ this.max
     ev.target.reset()
   },
@@ -78,7 +81,7 @@ const app = {
       ev.preventDefault()
       const listHTML = ev.target.parentElement.parentElement
 
-      if(listHTML.style.backgroundColor == 'lightgreen') {
+      if(listHTML.style.backgroundColor === 'lightgreen') {
         listHTML.style.backgroundColor = 'whitesmoke'
       } else {
         listHTML.style.backgroundColor = 'lightgreen'
@@ -90,8 +93,9 @@ const app = {
       const listHTML = ev.target.parentElement.parentElement
       
       for(let i = 0; i < this.dinos.length; i++) {
-        if(`i${this.dinos[i]}` == `${listHTML.getAttribute('id')}`) {
+        if(`${this.dinos[i].name}` === `${listHTML.getAttribute('id')}`) {
             this.dinos.splice(i, 1);
+            break
         }
       }
       listHTML.remove()
@@ -152,20 +156,32 @@ const app = {
     const secondButtonGroup = this.buttonGroup()
     upper.appendChild(secondButtonGroup)
 
-    if(listHTMLColor == 'lightgreen' && upperHTMLColor == 'lightgreen') {
+    if(listHTMLColor === 'lightgreen' && upperHTMLColor === 'lightgreen') {
       next.style.backgroundColor = 'lightgreen'
       upper.style.backgroundColor = 'lightgreen'
-    } else if (listHTMLColor == 'lightgreen') {
+    } else if (listHTMLColor === 'lightgreen') {
       upper.style.backgroundColor = 'lightgreen'
       next.style.backgroundColor = 'white'
-    } else if (upperHTMLColor == 'lightgreen') {
+    } else if (upperHTMLColor === 'lightgreen') {
       upper.style.backgroundColor = 'white'
       next.style.backgroundColor = 'lightgreen'
     } else {
       upper.style.backgroundColor = 'white'
       next.style.backgroundColor = 'white'
     }
-  
+
+    const newNext = next.previousSibling
+
+    //ListHTML is the top item that is being switched to the bottom one
+    //newNext is the bottom item thati s being switch to the top one 
+
+    for(let i = 0; i < this.dinos.length; i++) {
+      if (this.dinos[i].name === newNext.getAttribute('id')) {
+        this.dinos[i].name = `${listHTML.getAttribute('id')}`
+        this.dinos[i-1].name = `${newNext.getAttribute('id')}`
+        //console.log(this.dinos)
+      }
+    }
   },
   
   moveDown(ev) {
@@ -190,13 +206,13 @@ const app = {
     const secondButtonGroup = this.buttonGroup()
     lower.appendChild(secondButtonGroup)
 
-    if(listHTMLColor == 'lightgreen' && lowerHTMLColor == 'lightgreen') { 
+    if(listHTMLColor === 'lightgreen' && lowerHTMLColor === 'lightgreen') { 
       upper.style.backgroundColor = 'lightgreen'
       lower.style.backgroundColor = 'lightgreen'
-    } else if (listHTMLColor == 'lightgreen') {
+    } else if (listHTMLColor === 'lightgreen') {
       lower.style.backgroundColor = 'lightgreen'
       upper.style.backgroundColor = 'white'
-    } else if (lowerHTMLColor == 'lightgreen') {
+    } else if (lowerHTMLColor === 'lightgreen') {
       lower.style.backgroundColor = 'white'
       upper.style.backgroundColor = 'lightgreen'
     } else {
@@ -204,6 +220,16 @@ const app = {
       upper.style.backgroundColor = 'white'
     }
 
+    //ListHTML is the top item that is being switched to the bottom one
+    //lower is the bottom item that is being switch to the top one 
+
+    for(let i = 0; i < this.dinos.length; i++) {
+      if (this.dinos[i].name === listHTML.getAttribute('id')) {
+        this.dinos[i].name = `${lower.getAttribute('id')}`
+        this.dinos[i-1].name = `${listHTML.getAttribute('id')}`
+        //console.log(this.dinos)
+      }
+    }
   },
 
   refreshID(ev) {
@@ -212,7 +238,6 @@ const app = {
     const lower = listHTML.childNodes[0]
     
     listHTML.setAttribute('id', `${lower.innerText}`)
-    console.log(listHTML.getAttribute('id'))
   }
 
 }
