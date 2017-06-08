@@ -90,20 +90,7 @@ const app = {
       listHTML.remove()
   },
 
-  moveUp(ev) {
-    ev.preventDefault()
-    const listHTML = ev.target.parentElement.parentElement
-    //console.log(listHTML)
-
-    const upper = listHTML.previousSibling
-    //console.log(upper)
-    listHTML.innerText = upper.getAttribute('id')
-    upper.innerText = listHTML.getAttribute('id')
-
-    listHTML.setAttribute('id', `${upper.innerText}`)
-    upper.setAttribute('id', `${upper.innerText}`)
-
-
+  buttonGroup() {
     const buttonDiv = document.createElement('div')
     buttonDiv.setAttribute('class', 'button-group')
 
@@ -128,55 +115,35 @@ const app = {
     buttonDiv.appendChild(promote)
     buttonDiv.appendChild(deleteButton)
 
-
-
-    listHTML.appendChild(buttonDiv)
-
     up.addEventListener('click', this.moveUp.bind(this))
     promote.addEventListener('click', this.addFavorite.bind(this))
     deleteButton.addEventListener('click', this.deleteItem.bind(this))
 
+    return buttonDiv
+  },
+
+  moveUp(ev) {
+    ev.preventDefault()
+    const listHTML = ev.target.parentElement.parentElement
+    const upper = listHTML.previousSibling
+
+    listHTML.innerText = upper.getAttribute('id')
+    upper.innerText = listHTML.getAttribute('id')
+
+    const next = upper.nextSibling
+    
+    listHTML.setAttribute('id', `${upper.innerText}`)
+    upper.setAttribute('id', `${upper.innerText}`)
+    next.setAttribute('id', `${next.innerText}`)
+
+    const firstButtonGroup = this.buttonGroup()
+
+    listHTML.appendChild(firstButtonGroup)
 
 
+    const secondButtonGroup = this.buttonGroup()
 
-    const buttonDiv2 = document.createElement('div')
-    buttonDiv2.setAttribute('class', 'button-group')
-
-    const up2 = document.createElement('a')
-    up2.setAttribute('class', 'secondary button')
-    up2.textContent = 'Up'
-
-    const down2 = document.createElement('a')
-    down2.setAttribute('class', 'success button')
-    down2.textContent = 'Down'
-
-    const promote2 = document.createElement('a')
-    promote2.setAttribute('class', 'warning button')
-    promote2.textContent = 'Promote'
-
-    const deleteButton2 = document.createElement('a')
-    deleteButton2.setAttribute('class', 'alert button')
-    deleteButton2.textContent = 'Delete'
-
-    buttonDiv2.appendChild(up2)
-    buttonDiv2.appendChild(down2)
-    buttonDiv2.appendChild(promote2)
-    buttonDiv2.appendChild(deleteButton2)
-
-
-
-
-    upper.appendChild(buttonDiv2)
-
-    up2.addEventListener('click', this.moveUp.bind(this))
-    promote2.addEventListener('click', this.addFavorite.bind(this))
-    deleteButton2.addEventListener('click', this.deleteItem.bind(this))
-
-
-
-
-
-
+    upper.appendChild(secondButtonGroup)
 
   },
 
