@@ -49,8 +49,17 @@ const app = {
     buttonDiv.appendChild(promote)
     buttonDiv.appendChild(deleteButton)
     
-    item.textContent = dino.name
-    item.setAttribute('id', `${item.textContent}`)
+
+    const span = document.createElement('span')
+    span.setAttribute('contenteditable', '')
+    item.appendChild(span)
+    span.addEventListener('mouseout', this.refreshID.bind(this))
+
+    //item.textContent = dino.name
+    span.textContent = dino.name
+
+    //item.setAttribute('id', `${item.textContent}`)
+    item.setAttribute('id', `${span.innerText}`)
 
     item.appendChild(buttonDiv)
 
@@ -193,6 +202,15 @@ const app = {
     }
 
   },
+
+  refreshID(ev) {
+    ev.preventDefault()
+    const listHTML = ev.target.parentElement
+    const lower = listHTML.childNodes[0]
+    
+    listHTML.setAttribute('id', `${lower.innerText}`)
+    console.log(listHTML.getAttribute('id'))
+  }
 
 }
 

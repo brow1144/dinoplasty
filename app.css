@@ -6,3 +6,7 @@ li {
     padding: 5px 0 0 10px;
     background-color: whitesmoke;
 }
+
+span {
+    white-space: nowrap;
+}
