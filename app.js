@@ -24,17 +24,6 @@ const app = {
 
     ++ this.max
 
-    //  const a = document.getElementsByClassName('secondary button')
-    // a[0].addEventListener('click', this.addFavorite)
-
-    // const b = document.getElementsByClassName('success button')
-    // b[0].addEventListener('click', this.addFavorite)
-
-    // const c = document.querySelector('.warning.button')
-    // c.addEventListener('click', this.addFavorite)
-
-    // const d = document.getElementsByClassName('alert button')
-    // d[0].addEventListener('click', this.addFavorite)
 
     ev.target.reset()
   },
