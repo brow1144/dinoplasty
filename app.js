@@ -54,6 +54,9 @@ const app = {
     span.setAttribute('contenteditable', '')
     item.appendChild(span)
     span.addEventListener('mouseout', this.refreshID.bind(this))
+    span.addEventListener('click', this.refreshID.bind(this))
+    span.addEventListener('mouseover', this.refreshID.bind(this))
+
 
     //item.textContent = dino.name
     span.textContent = dino.name
