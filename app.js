@@ -129,6 +129,8 @@ const app = {
 
     listHTML.innerText = upper.getAttribute('id')
     upper.innerText = listHTML.getAttribute('id')
+    const listHTMLColor = listHTML.style.backgroundColor
+    const upperHTMLColor = upper.style.backgroundColor
 
     const next = upper.nextSibling
     
@@ -137,14 +139,25 @@ const app = {
     next.setAttribute('id', `${next.innerText}`)
 
     const firstButtonGroup = this.buttonGroup()
-
     listHTML.appendChild(firstButtonGroup)
 
-
     const secondButtonGroup = this.buttonGroup()
-
     upper.appendChild(secondButtonGroup)
 
+    if(listHTMLColor == 'lightgreen' && upperHTMLColor == 'lightgreen') {
+      next.style.backgroundColor = 'lightgreen'
+      upper.style.backgroundColor = 'lightgreen'
+    } else if (listHTMLColor == 'lightgreen') {
+      upper.style.backgroundColor = 'lightgreen'
+      next.style.backgroundColor = 'white'
+    } else if (upperHTMLColor == 'lightgreen') {
+      upper.style.backgroundColor = 'white'
+      next.style.backgroundColor = 'lightgreen'
+    } else {
+      upper.style.backgroundColor = 'white'
+      next.style.backgroundColor = 'white'
+    }
+  
   },
 
 }
