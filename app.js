@@ -60,7 +60,7 @@ const app = {
     item.appendChild(buttonDiv)
 
     up.addEventListener('click', this.moveUp.bind(this))
-    
+    down.addEventListener('click', this.moveDown.bind(this))
     promote.addEventListener('click', this.addFavorite.bind(this))
     deleteButton.addEventListener('click', this.deleteItem.bind(this))
 
@@ -116,6 +116,7 @@ const app = {
     buttonDiv.appendChild(deleteButton)
 
     up.addEventListener('click', this.moveUp.bind(this))
+    down.addEventListener('click', this.moveDown.bind(this))
     promote.addEventListener('click', this.addFavorite.bind(this))
     deleteButton.addEventListener('click', this.deleteItem.bind(this))
 
@@ -158,6 +159,44 @@ const app = {
       next.style.backgroundColor = 'white'
     }
   
+  },
+  
+  moveDown(ev) {
+    ev.preventDefault()
+    const listHTML = ev.target.parentElement.parentElement
+    const lower = listHTML.nextSibling
+
+    listHTML.innerText = lower.getAttribute('id')
+    lower.innerText = listHTML.getAttribute('id')
+    const listHTMLColor = listHTML.style.backgroundColor
+    const lowerHTMLColor = lower.style.backgroundColor
+
+    const upper = lower.previousSibling
+
+    listHTML.setAttribute('id', `${lower.innerText}`)
+    lower.setAttribute('id', `${lower.innerText}`)
+    upper.setAttribute('id', `${upper.innerText}`)
+
+    const firstButtonGroup = this.buttonGroup()
+    listHTML.appendChild(firstButtonGroup)
+
+    const secondButtonGroup = this.buttonGroup()
+    lower.appendChild(secondButtonGroup)
+
+    if(listHTMLColor == 'lightgreen' && lowerHTMLColor == 'lightgreen') { 
+      upper.style.backgroundColor = 'lightgreen'
+      lower.style.backgroundColor = 'lightgreen'
+    } else if (listHTMLColor == 'lightgreen') {
+      lower.style.backgroundColor = 'lightgreen'
+      upper.style.backgroundColor = 'white'
+    } else if (lowerHTMLColor == 'lightgreen') {
+      lower.style.backgroundColor = 'white'
+      upper.style.backgroundColor = 'lightgreen'
+    } else {
+      lower.style.backgroundColor = 'white'
+      upper.style.backgroundColor = 'white'
+    }
+
   },
 
 }
