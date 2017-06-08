@@ -6,23 +6,51 @@ const app = {
     this.list = document.querySelector(selectors.listSelector)
     document
       .querySelector(selectors.formSelector)
-      .addEventListener('submit', this.addDino.bind(this))
+      .addEventListener('submit', this.addDinoFromForm.bind(this))
+
+    this.load()
   },
 
-  addDino(ev) {
+  addDino(dino) {
+    const listItem = this.renderListItem(dino)
+    this.list.insertBefore(listItem, this.list.firstElementChild)
+
+    this.dinos.unshift(dino)
+    this.save()
+    //console.log(this.dinos)
+
+    ++ this.max
+  },
+
+
+
+  addDinoFromForm(ev) {
     ev.preventDefault()
     const dino = {
       id: this.max + 1,
       name: ev.target.dinoName.value,
     }
-    const listItem = this.renderListItem(dino)
-    this.list.insertBefore(listItem, this.list.firstElementChild)
-
-    this.dinos.unshift(dino)
-    //console.log(this.dinos)
-
-    ++ this.max
+    this.addDino(dino)
     ev.target.reset()
+  },
+
+  load() {
+    // load the JSON from localStorage
+    const dinoJSON = localStorage.getItem('dinos')
+
+    // convert the JSON back into an array
+    const dinoArray = JSON.parse(dinoJSON)
+
+    // set this.dinos with the dinos from that array
+    if (dinoArray) {
+      dinoArray
+        .reverse()
+        .map(this.addDino.bind(this))
+    }
+  },
+
+  save() {
+    localStorage.setItem('dinos', JSON.stringify(this.dinos))
   },
 
   renderListItem(dino) {
@@ -56,9 +84,9 @@ const app = {
     const span = document.createElement('span')
     span.setAttribute('contenteditable', '')
     item.appendChild(span)
-    span.addEventListener('mouseout', this.refreshID.bind(this))
-    span.addEventListener('click', this.refreshID.bind(this))
-    span.addEventListener('mouseover', this.refreshID.bind(this))
+    // span.addEventListener('mouseout', this.refreshID.bind(this))
+    // span.addEventListener('click', this.refreshID.bind(this))
+    // span.addEventListener('mouseover', this.refreshID.bind(this))
 
 
     //item.textContent = dino.name
@@ -98,6 +126,7 @@ const app = {
             break
         }
       }
+      this.save()
       listHTML.remove()
   },
 
@@ -182,6 +211,7 @@ const app = {
         //console.log(this.dinos)
       }
     }
+    this.save()
   },
   
   moveDown(ev) {
@@ -230,6 +260,7 @@ const app = {
         //console.log(this.dinos)
       }
     }
+    this.save()
   },
 
   refreshID(ev) {
@@ -238,6 +269,7 @@ const app = {
     const lower = listHTML.childNodes[0]
     
     listHTML.setAttribute('id', `${lower.innerText}`)
+    console.log(listHTML)
   }
 
 }
