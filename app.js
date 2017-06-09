@@ -17,7 +17,6 @@ const app = {
 
     this.dinos.unshift(dino)
     this.save()
-    //console.log(this.dinos)
 
     ++ this.max
   },
@@ -30,6 +29,7 @@ const app = {
       id: this.max + 1,
       name: ev.target.dinoName.value,
     }
+
     this.addDino(dino)
     ev.target.reset()
   },
@@ -84,15 +84,13 @@ const app = {
     const span = document.createElement('span')
     span.setAttribute('contenteditable', '')
     item.appendChild(span)
-    // span.addEventListener('mouseout', this.refreshID.bind(this))
-    // span.addEventListener('click', this.refreshID.bind(this))
-    // span.addEventListener('mouseover', this.refreshID.bind(this))
+    span.addEventListener('mouseout', this.refreshID.bind(this))
+    span.addEventListener('click', this.refreshID.bind(this))
+    span.addEventListener('mouseover', this.refreshID.bind(this))
 
 
-    //item.textContent = dino.name
     span.textContent = dino.name
 
-    //item.setAttribute('id', `${item.textContent}`)
     item.setAttribute('id', `${span.innerText}`)
 
     item.appendChild(buttonDiv)
@@ -110,7 +108,7 @@ const app = {
       const listHTML = ev.target.parentElement.parentElement
 
       if(listHTML.style.backgroundColor === 'lightgreen') {
-        listHTML.style.backgroundColor = 'whitesmoke'
+        listHTML.style.backgroundColor = '#E9E581'
       } else {
         listHTML.style.backgroundColor = 'lightgreen'
       }
@@ -190,13 +188,13 @@ const app = {
       upper.style.backgroundColor = 'lightgreen'
     } else if (listHTMLColor === 'lightgreen') {
       upper.style.backgroundColor = 'lightgreen'
-      next.style.backgroundColor = 'white'
+      next.style.backgroundColor = '#E9E581'
     } else if (upperHTMLColor === 'lightgreen') {
-      upper.style.backgroundColor = 'white'
+      upper.style.backgroundColor = '#E9E581'
       next.style.backgroundColor = 'lightgreen'
     } else {
-      upper.style.backgroundColor = 'white'
-      next.style.backgroundColor = 'white'
+      upper.style.backgroundColor = '#E9E581'
+      next.style.backgroundColor = '#E9E581'
     }
 
     const newNext = next.previousSibling
@@ -208,7 +206,6 @@ const app = {
       if (this.dinos[i].name === newNext.getAttribute('id')) {
         this.dinos[i].name = `${listHTML.getAttribute('id')}`
         this.dinos[i-1].name = `${newNext.getAttribute('id')}`
-        //console.log(this.dinos)
       }
     }
     this.save()
@@ -241,13 +238,13 @@ const app = {
       lower.style.backgroundColor = 'lightgreen'
     } else if (listHTMLColor === 'lightgreen') {
       lower.style.backgroundColor = 'lightgreen'
-      upper.style.backgroundColor = 'white'
+      upper.style.backgroundColor = '#E9E581'
     } else if (lowerHTMLColor === 'lightgreen') {
-      lower.style.backgroundColor = 'white'
+      lower.style.backgroundColor = '#E9E581'
       upper.style.backgroundColor = 'lightgreen'
     } else {
-      lower.style.backgroundColor = 'white'
-      upper.style.backgroundColor = 'white'
+      lower.style.backgroundColor = '#E9E581'
+      upper.style.backgroundColor = '#E9E581'
     }
 
     //ListHTML is the top item that is being switched to the bottom one
@@ -257,7 +254,6 @@ const app = {
       if (this.dinos[i].name === listHTML.getAttribute('id')) {
         this.dinos[i].name = `${lower.getAttribute('id')}`
         this.dinos[i-1].name = `${listHTML.getAttribute('id')}`
-        //console.log(this.dinos)
       }
     }
     this.save()
@@ -267,9 +263,16 @@ const app = {
     ev.preventDefault()
     const listHTML = ev.target.parentElement
     const lower = listHTML.childNodes[0]
-    
+     
+    for(let i = 0; i < this.dinos.length; i++) {
+      if (this.dinos[i].name == listHTML.getAttribute('id')) {
+        this.dinos[i].name = lower.innerText
+      }
+    }
+
     listHTML.setAttribute('id', `${lower.innerText}`)
-    console.log(listHTML)
+
+    this.save()
   }
 
 }
