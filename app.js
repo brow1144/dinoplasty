@@ -8,7 +8,7 @@ const app = {
       .querySelector(selectors.formSelector)
       .addEventListener('submit', this.addDinoFromForm.bind(this))
 
-    this.load()
+    this.load(selectors)
   },
 
   addDino(dino) {
@@ -19,6 +19,17 @@ const app = {
     this.save()
 
     ++ this.max
+
+    for(let i = 0; i < this.dinos.length; i++) {
+      if(this.dinos[i].name === listItem.getAttribute('id')) {
+        if(this.dinos[i].favorite == true) {
+          listItem.style.backgroundColor = 'lightgreen'
+        } else {
+          listItem.style.backgroundColor = '#E9E581'
+        }
+      }
+    }
+
   },
 
 
@@ -28,6 +39,7 @@ const app = {
     const dino = {
       id: this.max + 1,
       name: ev.target.dinoName.value,
+      favorite: false,
     }
 
     this.addDino(dino)
@@ -79,8 +91,8 @@ const app = {
     buttonDiv.appendChild(down)
     buttonDiv.appendChild(promote)
     buttonDiv.appendChild(deleteButton)
-    
 
+    
     const span = document.createElement('span')
     span.setAttribute('contenteditable', '')
     item.appendChild(span)
@@ -109,9 +121,25 @@ const app = {
 
       if(listHTML.style.backgroundColor === 'lightgreen') {
         listHTML.style.backgroundColor = '#E9E581'
+        for(let i = 0; i < this.dinos.length; i++) {
+          if(`${listHTML.getAttribute('id')}` == this.dinos[i].name) {
+              this.dinos[i].favorite = false;
+              //console.log(this.dinos[i].favorite)
+              break    
+          }
+        }
       } else {
         listHTML.style.backgroundColor = 'lightgreen'
+        for(let i = 0; i < this.dinos.length; i++) {
+          console.log(this.dinos.length)
+          if(`${listHTML.getAttribute('id')}` == this.dinos[i].name) {
+              this.dinos[i].favorite = true;
+              //console.log(this.dinos[i].favorite)
+              break
+          }
+        }
       }
+      this.save()
   },
   
   deleteItem(ev) {
