@@ -24,7 +24,7 @@ The Dinosaurs shoulds stay in the list even when the page is refreshed. (Complet
 
 ### Bonus Credit
 
-* Add another field to the form, and make sure that data (such as eating habits, era in which it lived, etc.) also persists across page loads. (Not Completed)
+* Add another field to the form, and make sure that data (such as eating habits, era in which it lived, etc.) also persists across page loads. (Completed in new-Dinosplasty)
 * Make it look nice. (Complete)
 
 ### Super Mega Bonus Credit
